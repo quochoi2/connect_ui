@@ -1,0 +1,78 @@
+<div class="relative overflow-x-auto">
+  <div class="relative">
+    <h1 class="flex justify-center font-bold text-[30px] mb-10">
+      User Connections
+    </h1>
+    <div class="absolute right-5 top-4 cursor-pointer">
+      <a (click)="logout()">Logout</a>
+    </div>
+  </div>
+
+  <div class="flex justify-end mr-10">
+    <a
+      href=""
+      class="px-4 py-2 text-white bg-blue-500 mb-4 rounded-md"
+      (click)="openModal()"
+      >Create</a
+    >
+  </div>
+
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">First Ip</th>
+        <th scope="col" class="px-6 py-3">Port Source</th>
+        <th scope="col" class="px-6 py-3">Last Ip</th>
+        <th scope="col" class="px-6 py-3">Port To</th>
+        <th scope="col" class="px-6 py-3">Pending</th>
+        <th scope="col" class="px-6 py-3">Moderator</th>
+        <th scope="col" class="px-6 py-3">Note</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let connect of connects"
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+      >
+        <td class="px-6 py-4">{{ connect.idFirst }}</td>
+        <td class="px-6 py-4">{{ connect.portSource }}</td>
+        <td class="px-6 py-4">{{ connect.idLast }}</td>
+        <td class="px-6 py-4">{{ connect.portTo }}</td>
+        <td class="px-6 py-4">{{ connect.pending ? "Yes" : "No" }}</td>
+        <td class="px-6 py-4">{{ connect.moderator || "Chưa ai duyệt" }}</td>
+        <td class="px-6 py-4">{{ connect.note }}</td>
+        <td class="px-6 py-4">
+          <button
+            (click)="openModal(connect)"
+            class="text-blue-600 hover:underline"
+          >
+            Edit
+          </button>
+          <button
+            (click)="deleteConnect(connect.id)"
+            class="text-red-600 hover:underline ml-2"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="connects.length === 0">
+        <td colspan="8" class="px-6 py-4 text-center">
+          No connections available.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-modal
+    [isVisible]="isModalVisible"
+    [connectData]="currentConnect"
+    (close)="closeModal()"
+    (submit)="handleSubmit($event)"
+  ></app-modal>
+</div>
