@@ -9,12 +9,12 @@
   </div>
 
   <div class="flex justify-end mr-10">
-    <a
-      href=""
+    <button
       class="px-4 py-2 text-white bg-blue-500 mb-4 rounded-md"
-      (click)="openModal()"
-      >Create</a
+      (click)="openModalCreate()"
     >
+      Create
+    </button>
   </div>
 
   <table
@@ -43,12 +43,23 @@
         <td class="px-6 py-4">{{ connect.portSource }}</td>
         <td class="px-6 py-4">{{ connect.idLast }}</td>
         <td class="px-6 py-4">{{ connect.portTo }}</td>
-        <td class="px-6 py-4">{{ connect.pending ? "Yes" : "No" }}</td>
+        <td
+          class="px-6 py-4"
+          [ngClass]="connect.pending ? 'text-red-600' : 'text-green-600'"
+        >
+          {{ connect.pending ? "Closed" : "Opened" }}
+        </td>
         <td class="px-6 py-4">{{ connect.moderator || "Chưa ai duyệt" }}</td>
-        <td class="px-6 py-4">{{ connect.note }}</td>
+        <td class="px-6 py-4">
+          {{
+            connect.note.length > 20
+              ? (connect.note | slice : 0 : 20) + "..."
+              : connect.note
+          }}
+        </td>
         <td class="px-6 py-4">
           <button
-            (click)="openModal(connect)"
+            (click)="openModalUpdate(connect)"
             class="text-blue-600 hover:underline"
           >
             Edit
@@ -69,10 +80,16 @@
     </tbody>
   </table>
 
-  <app-modal
-    [isVisible]="isModalVisible"
+  <app-modal-create
+    [isVisible]="isModalCreate"
+    (close)="closeModalCreate()"
+    (submit)="createConnect($event)"
+  ></app-modal-create>
+
+  <app-modal-update
+    [isVisible]="isModalUpdate"
     [connectData]="currentConnect"
-    (close)="closeModal()"
-    (submit)="handleSubmit($event)"
-  ></app-modal>
+    (close)="closeModalUpdate()"
+    (submit)="updateConnect($event)"
+  ></app-modal-update>
 </div>

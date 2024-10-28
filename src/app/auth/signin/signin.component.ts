@@ -35,7 +35,7 @@ export class SigninComponent {
       }
       alert('Đăng nhập thành công!');
     } catch (error) {
-      this.errorMessage = 'Đăng nhập thất bại, vui lòng thử lại!';
+      this.errorMessage = 'Login failed, try again!';
     }
   }
 

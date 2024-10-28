@@ -1,0 +1,79 @@
+<div class="relative overflow-x-auto">
+  <div class="relative">
+    <h1 class="flex justify-center font-bold text-[30px] mb-10">
+      Action histories
+    </h1>
+    <div class="absolute right-5 top-4 cursor-pointer">
+      <a (click)="logout()">Logout</a>
+    </div>
+  </div>
+  <div class="">
+    <div class="flex justify-end cursor-pointer">
+      <a
+        class="text-white bg-blue-500 mr-2 rounded-lg mb-4 px-4 py-2"
+        (click)="backAdminDashboard()"
+        >Exit</a
+      >
+    </div>
+  </div>
+
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Moderator</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+        <th scope="col" class="px-6 py-3">Connect_id</th>
+        <th scope="col" class="px-6 py-3">Datetime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let connect of connects"
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+      >
+        <td class="px-6 py-4">{{ connect.moderator }}</td>
+        <td
+          class="px-6 py-4"
+          [ngClass]="
+            connect.action === 'close' ? 'text-red-600' : 'text-green-600'
+          "
+        >
+          {{ connect.action === "close" ? "Closed" : "Opened" }}
+        </td>
+        <td class="px-6 py-4">{{ connect.connect_id }}</td>
+        <td class="px-6 py-4">
+          {{ connect.formattedUpdatedAt || "Chưa ai duyệt" }}
+        </td>
+      </tr>
+      <tr *ngIf="connects.length === 0">
+        <td colspan="8" class="px-6 py-4 text-center">
+          No connections available.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-end mt-4 items-center">
+    <button
+      class="text-white bg-blue-500 rounded-lg px-4 py-2"
+      (click)="prevPage()"
+      [disabled]="page === 1"
+    >
+      Previous
+    </button>
+    <span class="text-sm text-gray-700 mx-5">
+      {{ page }} / {{ totalPages }}
+    </span>
+    <button
+      class="text-white bg-blue-500 rounded-lg px-4 py-2"
+      (click)="nextPage()"
+      [disabled]="page === totalPages"
+    >
+      Next
+    </button>
+  </div>
+</div>

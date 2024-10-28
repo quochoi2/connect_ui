@@ -4,14 +4,16 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { UserDashboardComponent } from './user/dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
+import { HistoryComponent } from './admin/history/history.component';
 
 export const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'user/dashboard', component: UserDashboardComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent },
-  // { path: '', redirectTo: '/signin', pathMatch: 'full' },
-  // { path: '**', redirectTo: '/signup' },
+  { path: 'admin/history', component: HistoryComponent },
+  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  { path: '**', redirectTo: '/signup' },
 ];
 
 @NgModule({

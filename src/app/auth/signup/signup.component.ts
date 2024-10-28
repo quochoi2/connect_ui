@@ -28,9 +28,9 @@ export class SignupComponent {
       });
 
       alert('Đăng ký thành công!');
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/signin']);
     } catch (error) {
-      this.errorMessage = 'Đăng ký thất bại, vui lòng thử lại!';
+      this.errorMessage = 'Sign up failed, try again!';
     }
   }
 

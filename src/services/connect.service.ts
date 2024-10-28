@@ -58,4 +58,63 @@ export class ConnectService {
       throw error;
     }
   }
+
+  async getAllConnectAfterDeleted() {
+    try {
+      const res = await axios.get(this.connectUrl + '/getAllAfterDeleted');
+      return res.data;
+    } catch (error) {
+      console.log('Error fetching data');
+      throw error;
+    }
+  }
+
+  async openConnect(id: number, moderator: string) {
+    try {
+      await axios.post(`${this.connectUrl}/${id}/open`, null, {
+        params: {
+          moderator: moderator,
+        },
+      });
+    } catch (error) {
+      console.error('Error opening connect:', error);
+      throw error;
+    }
+  }
+
+  async closeConnect(id: number) {
+    try {
+      await axios.post(`${this.connectUrl}/${id}/close`);
+    } catch (error) {
+      console.error('Error closing connect:', error);
+      throw error;
+    }
+  }
+
+  async restoreConnect(id: number) {
+    try {
+      await axios.post(`${this.connectUrl}/${id}/restore`);
+    } catch (error) {
+      console.log('Error restoring connect');
+      throw error;
+    }
+  }
+
+  async historyAddConnect(id: number) {
+    try {
+      await axios.post(`${this.connectUrl}/${id}/restore`);
+    } catch (error) {
+      console.log('Error restoring connect');
+      throw error;
+    }
+  }
+
+  async historyDeleteConnect(id: number) {
+    try {
+      await axios.post(`${this.connectUrl}/${id}/restore`);
+    } catch (error) {
+      console.log('Error restoring connect');
+      throw error;
+    }
+  }
 }

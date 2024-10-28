@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-modal-update',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './modal.component.html',
