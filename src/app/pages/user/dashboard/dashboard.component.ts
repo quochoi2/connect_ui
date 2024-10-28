@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../services/auth.service';
-import { ConnectService } from '../../../services/connect.service';
-import { ModalComponent } from './modal-update/modal.component';
+import { AuthService } from '../../../../services/auth.service';
+import { ConnectService } from '../../../../services/connect.service';
+import { ModalUpdateComponent } from './modal-update/modal.component';
 import { ModalCreateComponent } from './modal-create/modal-create.component';
 
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [CommonModule, ModalComponent, ModalCreateComponent],
+  imports: [CommonModule, ModalUpdateComponent, ModalCreateComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -17,8 +17,8 @@ export class UserDashboardComponent {
   connects: any[] = [];
   userId: number | null = null;
 
-  isModalCreate: boolean = false;
-  isModalUpdate: boolean = false;
+  isCreateModalVisible = false;
+  isUpdateModalVisible = false;
   currentConnect: any = null;
 
   constructor(
@@ -48,46 +48,52 @@ export class UserDashboardComponent {
     }
   }
 
-  openModalCreate() {
-    this.isModalCreate = true;
+  openCreateModal() {
+    this.currentConnect = {};
+    this.isCreateModalVisible = true;
   }
 
-  closeModalCreate() {
-    this.isModalCreate = false;
+  closeCreateModal() {
+    this.isCreateModalVisible = false;
+    this.currentConnect = null;
   }
 
-  async createConnect(data: any) {
-    if (data) {
+  openUpdateModal(connect: any) {
+    this.currentConnect = connect || {};
+    this.isUpdateModalVisible = true;
+  }
+
+  closeUpdateModal() {
+    this.isUpdateModalVisible = false;
+    this.currentConnect = null;
+  }
+
+  async createConnect(connectData: any) {
+    try {
       if (this.userId) {
-        data.user_id = this.userId;
+        console.log(this.userId);
+        await this.connectService.createConnectService(
+          connectData,
+          this.userId
+        );
+        this.getAllByUserId();
+        alert('Create successfully!');
+        this.closeCreateModal();
       }
-      try {
-        await this.connectService.createConnect(data);
-        alert('Connect created!');
-      } catch (error) {
-        console.error('Error creating connection:', error);
-      }
+    } catch (error) {
+      console.error('Error creating connect:', error);
     }
-
-    this.isModalCreate = false;
-    this.getAllByUserId();
   }
 
-  openModalUpdate(connect?: any) {
-    this.currentConnect = connect ? { ...connect } : {};
-    this.isModalUpdate = true;
-  }
-
-  closeModalUpdate() {
-    this.isModalUpdate = false;
-  }
-
-  async updateConnect(data: any) {
-    if (data.id) {
-      await this.connectService.updateConnect(data.id, data);
+  async updateConnect(connectData: any) {
+    try {
+      await this.connectService.updateConnect(connectData.id, connectData);
+      this.getAllByUserId();
+      alert('Update successfully!');
+      this.closeUpdateModal();
+    } catch (error) {
+      console.error('Error updating connect:', error);
     }
-    this.isModalUpdate = false;
-    this.getAllByUserId();
   }
 
   async deleteConnect(connectId: number) {

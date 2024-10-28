@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { historyService } from '../../../services/history.service';
-import { AuthService } from '../../../services/auth.service';
-import axios from 'axios';
-import { formatDate } from '../../../utils/formatDateTime';
+import { historyService } from '../../../../../services/history.service';
+import { AuthService } from '../../../../../services/auth.service';
+import { formatDate } from '../../../../../utils/formatDateTime';
 
 @Component({
   selector: 'app-history',

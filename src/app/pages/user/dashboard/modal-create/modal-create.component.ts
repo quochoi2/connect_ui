@@ -10,34 +10,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./modal-create.component.scss'],
 })
 export class ModalCreateComponent {
-  @Input() isVisible = false;
+  @Input() isVisible: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<any>();
 
-  newConnectData = {
-    idFirst: '',
-    portSource: '',
-    idLast: '',
-    portTo: '',
-    note: '',
-  };
-
-  onClose() {
-    this.close.emit();
-  }
+  connectData: any = {};
 
   onSubmit() {
-    this.submit.emit(this.newConnectData);
-    this.resetForm();
-  }
-
-  resetForm() {
-    this.newConnectData = {
-      idFirst: '',
-      portSource: '',
-      idLast: '',
-      portTo: '',
-      note: '',
-    };
+    this.submit.emit(this.connectData);
   }
 }

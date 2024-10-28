@@ -29,9 +29,12 @@ export class ConnectService {
     }
   }
 
-  async createConnect(connectData: any) {
+  async createConnectService(connectData: any, userId: number) {
     try {
-      const response = await axios.post(this.connectUrl, connectData);
+      const response = await axios.post(this.connectUrl, {
+        ...connectData,
+        user_id: userId,
+      });
       return response.data;
     } catch (error) {
       console.error('Error creating new connect:', error);
@@ -92,24 +95,6 @@ export class ConnectService {
   }
 
   async restoreConnect(id: number) {
-    try {
-      await axios.post(`${this.connectUrl}/${id}/restore`);
-    } catch (error) {
-      console.log('Error restoring connect');
-      throw error;
-    }
-  }
-
-  async historyAddConnect(id: number) {
-    try {
-      await axios.post(`${this.connectUrl}/${id}/restore`);
-    } catch (error) {
-      console.log('Error restoring connect');
-      throw error;
-    }
-  }
-
-  async historyDeleteConnect(id: number) {
     try {
       await axios.post(`${this.connectUrl}/${id}/restore`);
     } catch (error) {

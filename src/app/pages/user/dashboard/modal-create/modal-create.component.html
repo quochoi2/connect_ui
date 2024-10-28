@@ -1,0 +1,57 @@
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  *ngIf="isVisible"
+>
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+    <h2 class="text-lg font-bold mb-4">Create New Connection</h2>
+
+    <div>
+      <label>First IP:</label>
+      <input
+        type="text"
+        [(ngModel)]="connectData.idFirst"
+        class="border p-2 w-full mb-4"
+      />
+
+      <label>Port Source:</label>
+      <input
+        type="text"
+        [(ngModel)]="connectData.portSource"
+        class="border p-2 w-full mb-4"
+      />
+
+      <label>Last IP:</label>
+      <input
+        type="text"
+        [(ngModel)]="connectData.idLast"
+        class="border p-2 w-full mb-4"
+      />
+
+      <label>Port To:</label>
+      <input
+        type="text"
+        [(ngModel)]="connectData.portTo"
+        class="border p-2 w-full mb-4"
+      />
+
+      <label>Note:</label>
+      <textarea
+        [(ngModel)]="connectData.note"
+        class="border p-2 w-full mb-4"
+      ></textarea>
+
+      <button
+        (click)="onSubmit()"
+        class="px-4 py-2 bg-blue-500 text-white rounded-md"
+      >
+        Create
+      </button>
+      <button
+        (click)="close.emit()"
+        class="ml-2 px-4 py-2 bg-gray-300 rounded-md"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

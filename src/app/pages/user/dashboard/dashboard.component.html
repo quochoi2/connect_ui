@@ -1,20 +1,20 @@
 <div class="relative overflow-x-auto">
   <div class="relative">
     <h1 class="flex justify-center font-bold text-[30px] mb-10">
-      Hello {{ name }} | Connections manager
+      User Connections
     </h1>
     <div class="absolute right-5 top-4 cursor-pointer">
       <a (click)="logout()">Logout</a>
     </div>
   </div>
-  <div class="">
-    <div class="flex justify-end cursor-pointer">
-      <a
-        class="text-white bg-blue-500 mr-2 rounded-lg mb-4 px-4 py-2"
-        (click)="goToHistoryActions()"
-        >History</a
-      >
-    </div>
+
+  <div class="flex justify-end mr-10">
+    <button
+      class="px-4 py-2 text-white bg-blue-500 mb-4 rounded-md"
+      (click)="openCreateModal()"
+    >
+      Create
+    </button>
   </div>
 
   <table
@@ -31,7 +31,6 @@
         <th scope="col" class="px-6 py-3">Pending</th>
         <th scope="col" class="px-6 py-3">Moderator</th>
         <th scope="col" class="px-6 py-3">Note</th>
-        <th scope="col" class="px-6 py-3">DateTime</th>
         <th scope="col" class="px-6 py-3">Action</th>
       </tr>
     </thead>
@@ -48,7 +47,7 @@
           class="px-6 py-4"
           [ngClass]="connect.pending ? 'text-red-600' : 'text-green-600'"
         >
-          {{ connect.pending ? "Inactive" : "Active" }}
+          {{ connect.pending ? "Closed" : "Opened" }}
         </td>
         <td class="px-6 py-4">{{ connect.moderator || "Chưa ai duyệt" }}</td>
         <td class="px-6 py-4">
@@ -59,27 +58,17 @@
           }}
         </td>
         <td class="px-6 py-4">
-          {{ connect.formattedUpdatedAt || "Chưa ai duyệt" }}
-        </td>
-        <td class="px-6 py-4">
           <button
-            *ngIf="connect.pending === 1"
-            (click)="
-              handleOpenAndCloseConnect(connect.id, 'open', connect.moderator)
-            "
+            (click)="openUpdateModal(connect)"
             class="text-blue-600 hover:underline"
           >
-            Open
+            Edit
           </button>
-
           <button
-            *ngIf="connect.pending === 0"
-            (click)="
-              handleOpenAndCloseConnect(connect.id, 'close', connect.moderator)
-            "
-            class="text-red-600 hover:underline"
+            (click)="deleteConnect(connect.id)"
+            class="text-red-600 hover:underline ml-2"
           >
-            Close
+            Delete
           </button>
         </td>
       </tr>
@@ -90,4 +79,17 @@
       </tr>
     </tbody>
   </table>
+
+  <app-modal-create
+    [isVisible]="isCreateModalVisible"
+    (close)="closeCreateModal()"
+    (submit)="createConnect($event)"
+  ></app-modal-create>
+
+  <app-modal-update
+    [isVisible]="isUpdateModalVisible"
+    [connectData]="currentConnect"
+    (close)="closeUpdateModal()"
+    (submit)="updateConnect($event)"
+  ></app-modal-update>
 </div>

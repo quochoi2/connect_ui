@@ -9,15 +9,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })
-export class ModalComponent {
+export class ModalUpdateComponent {
   @Input() isVisible = false;
-  @Input() connectData: any = {
-    idFirst: '',
-    portSource: '',
-    idLast: '',
-    portTo: '',
-    note: '',
-  };
+  @Input() connectData: any = {};
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<any>();
 

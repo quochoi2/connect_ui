@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../services/auth.service';
-import { ConnectService } from '../../../services/connect.service';
+import { AuthService } from '../../../../services/auth.service';
+import { ConnectService } from '../../../../services/connect.service';
 import { Router } from '@angular/router';
-import { formatDate, formatTime } from '../../../utils/formatDateTime';
-import { historyService } from '../../../services/history.service';
+import { formatDate, formatTime } from '../../../../utils/formatDateTime';
+import { historyService } from '../../../../services/history.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -67,15 +67,11 @@ export class AdminDashboardComponent {
         });
       } else if (action === 'close') {
         await this.connectService.closeConnect(id);
-        if (name) {
-          await this.historyService.historyAddConnect({
-            action: 'close',
-            moderator: name,
-            connect_id: id,
-          });
-        } else {
-          console.warn('Moderator name is not defined for closing action.');
-        }
+        await this.historyService.historyAddConnect({
+          action: 'close',
+          moderator: name,
+          connect_id: id,
+        });
       }
       this.getAllConnects();
     } catch (error) {
